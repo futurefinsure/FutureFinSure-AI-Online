@@ -1,0 +1,20 @@
+{
+  "name": "aia-linebot-witk",
+  "version": "1.0.0",
+  "description": "AIA Insurance Line BOT by WIT-K - Finance & Insurance Advisor",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "@line/bot-sdk": "^9.3.0",
+    "@anthropic-ai/sdk": "^0.27.0",
+    "express": "^4.19.2",
+    "dotenv": "^16.4.5",
+    "node-cron": "^3.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
