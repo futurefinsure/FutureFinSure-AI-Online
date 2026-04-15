@@ -341,19 +341,17 @@ async function handleMessage(event) {
 
 // ===== WEBHOOK =====
 app.post('/webhook',
-  line.middleware({ channelSecret: process.env.LINE_CHANNEL_SECRET }),
+  express.json(),
   async (req, res) => {
-    res.status(200).end();
-    for (const event of req.body.events) {
-      try {
-        if (event.type === 'follow') await handleFollow(event);
-        else if (event.type === 'message' && event.message.type === 'text') await handleMessage(event);
-      } catch (err) {
-        console.error('Event error:', err.message);
-      }
+    // Verify signature
+    const signature = req.headers['x-line-signature'];
+    if (!line.validateSignature(
+      JSON.stringify(req.body),
+      process.env.LINE_CHANNEL_SECRET,
+      signature
+    )) {
+      return res.status(403).end();
     }
-  }
-);
 
 // ===== DAILY BROADCAST =====
 cron.schedule('0 8 * * *', async () => {
